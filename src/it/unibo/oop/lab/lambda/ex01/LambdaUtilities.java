@@ -105,6 +105,8 @@ public final class LambdaUtilities {
     }
 
     /**
+     * Example usage of LambdaUtilities, use TestLambdaUtilities to verify the correctness of your implementation.
+     *
      * @param args
      *            ignored
      */
