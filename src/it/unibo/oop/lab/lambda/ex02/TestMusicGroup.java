@@ -18,11 +18,14 @@ import static org.junit.Assert.assertEquals;
  */
 /**
  *
+ *
  */
 public final class TestMusicGroup {
 
     private static final String UNTITLED = "untitled";
     private static final String III = "III";
+    private static final String II = "II";
+    private static final String I = "I";
     private MusicGroup lz;
 
     /**
@@ -31,18 +34,18 @@ public final class TestMusicGroup {
     @Before
     public void setUp() {
         lz = new MusicGroupImpl();
-        lz.addAlbum("I", 1969);
-        lz.addAlbum("II", 1969);
+        lz.addAlbum(I, 1969);
+        lz.addAlbum(II, 1969);
         lz.addAlbum(III, 1970);
         lz.addAlbum(UNTITLED, 1971);
-        lz.addSong("Dazed and Confused", Optional.of("I"), 6.5);
-        lz.addSong("I Can't Quit You Baby", Optional.of("I"), 4.6);
-        lz.addSong("Whole Lotta Love", Optional.of("II"), 5.5);
-        lz.addSong("Ramble On", Optional.of("II"), 4.6);
+        lz.addSong("Dazed and Confused", Optional.of(I), 6.5);
+        lz.addSong("I Can't Quit You Baby", Optional.of(I), 4.6);
+        lz.addSong("Whole Lotta Love", Optional.of(II), 5.5);
+        lz.addSong("Ramble On", Optional.of(II), 4.6);
         lz.addSong("Immigrant Song", Optional.of(III), 2.4);
         lz.addSong("That's the Way", Optional.of(III), 5.4);
-        lz.addSong("Black Dog", Optional.of("untitled"), 4.9);
-        lz.addSong("When the Levee Breaks", Optional.of("untitled"), 7.1);
+        lz.addSong("Black Dog", Optional.of(UNTITLED), 4.9);
+        lz.addSong("When the Levee Breaks", Optional.of(UNTITLED), 7.1);
         lz.addSong("Travelling Riverside Blues", Optional.empty(), 5.2);
     }
 
@@ -52,13 +55,12 @@ public final class TestMusicGroup {
     @Test
     public void testAlbumNames() {
         final List<String> result = new ArrayList<>();
-        result.add("II");
+        result.add(II);
         result.add(UNTITLED);
-        result.add("III");
-        result.add("I");
+        result.add(III);
+        result.add(I);
         final List<String> actual = lz.albumNames().collect(toList());
         assertTrue(actual.containsAll(result));
-        assertTrue(lz.albumNames().collect(toList()).containsAll(result));
     }
 
     /**
@@ -85,7 +87,7 @@ public final class TestMusicGroup {
      */
     @Test
     public void testAlbumInYear() {
-        final List<String> result = Arrays.asList(new String[] { "II", "I" });
+        final List<String> result = Arrays.asList(new String[] { II, I });
         final List<String> actual = lz.albumInYear(1969).collect(toList());
         assertEquals(result, actual);
     }
@@ -95,7 +97,7 @@ public final class TestMusicGroup {
      */
     @Test
     public void testCountSongs() {
-        assertEquals(2, lz.countSongs("I"));
+        assertEquals(2, lz.countSongs(I));
     }
 
     /**
