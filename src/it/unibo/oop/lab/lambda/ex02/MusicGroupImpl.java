@@ -83,12 +83,46 @@ public final class MusicGroupImpl implements MusicGroup {
 
     @Override
     public Optional<String> longestSong() {
-        return null;
+        OptionalDouble max = this.songs.stream()
+                .filter(song -> song.getAlbumName().isPresent())
+                .mapToDouble(song -> song.getDuration()).max();
+        //System.out.println(max.toString());
+
+        Optional<String> longestSong = Optional.empty();
+        for (Song song : songs) {
+            if (Optional.of(song.getDuration()).get().compareTo(max.getAsDouble()) == 0) {
+                longestSong = Optional.of(song.getSongName());
+            }
+        }
+        //System.out.println(longestSong);
+        return longestSong;
     }
 
     @Override
     public Optional<String> longestAlbum() {
-        return null;
+        final Map<String, OptionalDouble> m = new HashMap<>();
+
+        this.albums.forEach((key, value) -> m.put(key, OptionalDouble.empty()));
+        m.forEach((key, value) -> {
+            m.put(key, OptionalDouble.of(
+                this.songs.stream()
+                    .filter(song -> song.getAlbumName().isPresent())
+                    .filter(song -> song.getAlbumName().get().equals(key))
+                    .mapToDouble(song -> song.getDuration()).sum()));
+        });
+        //System.out.println(m.toString());
+
+        Optional<Double> max = m.entrySet().stream().map(entry -> entry.getValue().orElseThrow()).max((Double::compare));
+        //System.out.println(max.toString());
+
+        Optional<String> longestAlbum = Optional.empty();
+        for (Entry<String, OptionalDouble> entry : m.entrySet()) {
+            if (Optional.of(entry.getValue().getAsDouble()).get().compareTo(max.get()) == 0) {
+                longestAlbum = Optional.of(entry.getKey());
+            }
+        }
+        //System.out.println(longestAlbum);
+        return longestAlbum;
     }
 
     private static final class Song {
