@@ -37,22 +37,32 @@ public final class MusicGroupImpl implements MusicGroup {
 
     @Override
     public Stream<String> albumNames() {
+        //return this.albums.entrySet().stream().map(entry -> entry.getKey());
         return this.albums.keySet().stream();
     }
 
     @Override
     public Stream<String> albumInYear(final int year) {
-        return null;
+        //Set<Entry<String, Integer>> x = this.albums.entrySet();
+        //x.removeIf(entry -> entry.getValue() != year);
+        //return x.stream().map(entry -> entry.getKey());
+        return this.albums.entrySet().stream().filter(entry -> entry.getValue() == year).map(entry -> entry.getKey());
     }
 
     @Override
     public int countSongs(final String albumName) {
-        return -1;
+        //return this.songs.stream()
+        //        .filter(song -> song.getAlbumName().isPresent())
+        //        .filter(song -> song.getAlbumName().get().equals(albumName)).toArray().length;
+        return (int) this.songs.stream()
+                .filter(song -> song.getAlbumName().isPresent())
+                .filter(song -> song.getAlbumName().get().equals(albumName)).count();
     }
 
     @Override
     public int countSongsInNoAlbum() {
-        return -1;
+        return (int) this.songs.stream()
+                .filter(song -> song.getAlbumName().isEmpty()).count();
     }
 
     @Override
