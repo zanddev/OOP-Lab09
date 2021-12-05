@@ -3,9 +3,11 @@ package it.unibo.oop.lab.lambda.ex02;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.Set;
+//import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -67,7 +69,16 @@ public final class MusicGroupImpl implements MusicGroup {
 
     @Override
     public OptionalDouble averageDurationOfSongs(final String albumName) {
-        return null;
+        //return OptionalDouble.of(this.songs.stream()
+        //        .filter(song -> song.getAlbumName().isPresent())
+        //        .filter(song -> song.getAlbumName().get().equals(albumName))
+        //        .map(song -> song.getDuration())
+        //        .collect(Collectors.averagingDouble(x -> x))
+        //        );
+        return this.songs.stream()
+               .filter(song -> song.getAlbumName().isPresent())
+               .filter(song -> song.getAlbumName().get().equals(albumName))
+               .mapToDouble(song -> song.getDuration()).average();
     }
 
     @Override
