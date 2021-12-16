@@ -1,5 +1,6 @@
 package it.unibo.oop.lab.lambda.ex02;
 
+//import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -58,27 +59,32 @@ public final class MusicGroupImpl implements MusicGroup {
         //        .filter(song -> song.getAlbumName().get().equals(albumName)).toArray().length;
         return (int) this.songs.stream()
                 .filter(song -> song.getAlbumName().isPresent())
-                .filter(song -> song.getAlbumName().get().equals(albumName)).count();
+                .filter(song -> song.getAlbumName().get().equals(albumName))
+                .count();
     }
 
     @Override
     public int countSongsInNoAlbum() {
         return (int) this.songs.stream()
-                .filter(song -> song.getAlbumName().isEmpty()).count();
+                .filter(song -> song.getAlbumName().isEmpty())
+                .count();
     }
 
     @Override
     public OptionalDouble averageDurationOfSongs(final String albumName) {
-        //return OptionalDouble.of(this.songs.stream()
-        //        .filter(song -> song.getAlbumName().isPresent())
-        //        .filter(song -> song.getAlbumName().get().equals(albumName))
-        //        .map(song -> song.getDuration())
-        //        .collect(Collectors.averagingDouble(x -> x))
-        //        );
+    /*
+        return OptionalDouble.of(this.songs.stream()
+                .filter(song -> song.getAlbumName().isPresent())
+                .filter(song -> song.getAlbumName().get().equals(albumName))
+                .map(song -> song.getDuration())
+                .collect(Collectors.averagingDouble(x -> x))
+                );
+    */
         return this.songs.stream()
                .filter(song -> song.getAlbumName().isPresent())
                .filter(song -> song.getAlbumName().get().equals(albumName))
-               .mapToDouble(song -> song.getDuration()).average();
+               .mapToDouble(song -> song.getDuration())
+               .average();
     }
 
     @Override
@@ -96,6 +102,13 @@ public final class MusicGroupImpl implements MusicGroup {
         }
         //System.out.println(longestSong);
         return longestSong;
+    /*
+        // Sol
+        return this.songs.stream()
+                .collect(Collectors.maxBy(Comparator.comparingDouble(Song::getDuration)))
+                //.collect(Collectors.maxBy((a, b) -> Double.compare(a.getDuration(), b.getDuration()))
+                .map(Song::getSongName);
+    */
     }
 
     @Override
@@ -123,6 +136,14 @@ public final class MusicGroupImpl implements MusicGroup {
         }
         //System.out.println(longestAlbum);
         return longestAlbum;
+/*
+        // Sol
+        return this.songs.stream().filter(a -> a.getAlbumName().isPresent())
+                .collect(Collectors.groupingBy(Song::getAlbumName, Collectors.summingDouble(Song::getDuration)))
+                .entrySet().stream()
+                .collect(Collectors.maxBy(Comparator.comparingDouble(Entry::getValue)))
+                .flatMap(Entry::getKey);
+*/
     }
 
     private static final class Song {
