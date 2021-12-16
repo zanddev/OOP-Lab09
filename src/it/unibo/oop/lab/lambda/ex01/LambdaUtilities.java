@@ -83,20 +83,20 @@ public final class LambdaUtilities {
      *         based on the mapping done by the function
      */
     public static <R, T> Map<R, Set<T>> group(final List<T> list, final Function<T, R> op) {
-        final Map<R, Set<T>> m = new HashMap<R, Set<T>>();
+        final Map<R, Set<T>> map = new HashMap<R, Set<T>>();
         /*for (T e : list) {
-            if (!m.containsKey(op.apply(e))) {
-                m.put(op.apply(e), new HashSet<T>());
+            if (!map.containsKey(op.apply(e))) {
+                map.put(op.apply(e), new HashSet<T>());
             }
-            m.get(op.apply(e)).add(e);
+            map.get(op.apply(e)).add(e);
         }*/
         list.forEach(t -> {
-            if (!m.containsKey(op.apply(t))) {
-                m.merge(op.apply(t), new HashSet<>(), (key, value) -> value);
+            if (!map.containsKey(op.apply(t))) {
+                map.merge(op.apply(t), new HashSet<>(), (key, value) -> value);
             }
-            m.get(op.apply(t)).add(t);
+            map.get(op.apply(t)).add(t);
         });
-        return m;
+        return map;
     }
 
     /**
@@ -116,7 +116,7 @@ public final class LambdaUtilities {
 
         map.forEach((key, value) -> {
             m.put(key, value.orElseGet(def));
-            m.put(key, value.orElse(def.get()));
+            //m.put(key, value.orElse(def.get()));
         });
         return m;
     }
