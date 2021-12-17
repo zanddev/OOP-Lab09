@@ -72,7 +72,7 @@ public final class LambdaFilter extends JFrame {
             //words.forEach(e -> e = e + "\n");
             return String.join("\n", words);
         }),*/
-        SORT("Alphabetical order", x -> x.lines().sorted().reduce("", (acc, elem) -> (acc.concat(elem + "\n")))),
+        SORT("Alphabetical order", x -> x.lines().sorted().reduce("", (acc, elem) -> acc.concat(elem + "\n"))),
 
     /*
         COUNT("Count the words", x -> {
