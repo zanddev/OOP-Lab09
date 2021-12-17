@@ -10,9 +10,11 @@ import java.awt.Toolkit;
 //import java.util.Arrays;
 //import java.util.Collections;
 import java.util.HashMap;
+//import java.util.Iterator;
 //import java.util.LinkedList;
 //import java.util.List;
 import java.util.Map;
+//import java.util.StringJoiner;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -73,6 +75,24 @@ public final class LambdaFilter extends JFrame {
         SORT("Alphabetical order", x -> x.lines().sorted().reduce("", (acc, elem) -> (acc.concat(elem + "\n")))),
 
     /*
+        COUNT("Count the words", x -> {
+            final List<String> list = new LinkedList<>();
+            x.lines().forEach(word -> {
+                list.add(word);
+            });
+            final List<String> words = new LinkedList<>();
+            Iterator<String> it = x.lines().distinct().iterator();
+            while (it.hasNext()) {
+                String temp = it.next();
+                if (!temp.trim().equals("")) {
+                    words.add(temp);
+                }
+            }
+            final StringJoiner out = new StringJoiner(" ");
+            words.forEach(elem -> out.add(elem + " -> " + Collections.frequency(list, elem)));
+            return out.toString();
+        }),
+    *//*
         COUNT("Count the words", x -> {
             final Map<String, Integer> words = new HashMap<>();
             x.lines().forEach(word -> {
