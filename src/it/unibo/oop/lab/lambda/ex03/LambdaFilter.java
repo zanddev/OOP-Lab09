@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
+
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -49,7 +50,9 @@ public final class LambdaFilter extends JFrame {
         //CHARS("Number of chars", x -> String.valueOf(Stream.of(x).mapToInt(e -> e.length()).sum())),
 
         //LINES("Number of lines", x -> String.valueOf(x.split("\n").length)),
-        LINES("Number of lines", x -> String.valueOf(x.lines().count()));
+        LINES("Number of lines", x -> String.valueOf(x.lines().count())),
+
+        ORDER("Alphabetical order", x -> x.lines().sorted().reduce("", (acc, elem) -> (acc.concat(elem + "\n"))));
 
         private final String commandName;
         private final Function<String, String> fun;
