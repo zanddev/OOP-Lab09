@@ -79,12 +79,12 @@ public final class LambdaFilter extends JFrame {
         }),*/
         SORT("Alphabetical order", x -> x.lines().sorted().reduce("", (acc, elem) -> acc.concat(elem + "\n"))),
         /*SORT("Sort words in alphabetical order", s ->
-            Arrays.stream(s.split(ANY_NON_WORD))
+            Arrays.stream(s.split(LambdaFilter.ANY_NON_WORD))
                 .sorted()
                 .collect(Collectors.joining("\n"))),
         */
     /*
-        COUNT("Count the words", x -> {
+        COUNT("Count words", x -> {
             final List<String> list = new LinkedList<>();
             x.lines().forEach(word -> {
                 list.add(word);
@@ -102,7 +102,7 @@ public final class LambdaFilter extends JFrame {
             return out.toString();
         }),
     *//*
-        COUNT("Count the words", x -> {
+        COUNT("Count words", x -> {
             final Map<String, Integer> words = new HashMap<>();
             x.lines().forEach(word -> {
                 if (!word.trim().equals("")) {
@@ -119,7 +119,7 @@ public final class LambdaFilter extends JFrame {
             return String.join("\n", list.toArray(new String[0]));
         });
     */
-        COUNT("Count the words", x -> {
+        COUNT("Count words", x -> {
             final Map<String, Integer> words = new HashMap<>();
             x.lines().forEach(word -> {
                 if (!word.trim().equals("")) {
@@ -138,7 +138,7 @@ public final class LambdaFilter extends JFrame {
         }),
     /*
         COUNT("Count words", s -> {
-            return Arrays.stream(s.split(ANY_NON_WORD))
+            return Arrays.stream(s.split(LambdaFilter.ANY_NON_WORD))
                     .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                     .entrySet().stream()
                     .map(entry -> entry.getKey() + " -> " + entry.getValue())
