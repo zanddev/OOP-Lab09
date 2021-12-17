@@ -44,22 +44,27 @@ import javax.swing.JTextArea;
 public final class LambdaFilter extends JFrame {
 
     private static final long serialVersionUID = 1760990730218643730L;
+    //private static final String ANY_NON_WORD = "(\\s|\\p{Punct})+";
 
     private enum Command {
         //IDENTITY("No modifications", x -> x),
         IDENTITY("No modifications", Function.identity()),
 
         //LOWERCASE("Lowercase", x -> x.toLowerCase()),
-        LOWERCASE("Lowercase", x -> x.lines()
+        LOWERCASE("Lowercase", String::toLowerCase),
+        /*LOWERCASE("Lowercase", x -> x.lines()
                 .map(elem -> elem.toLowerCase())
                 .reduce("", (acc, elem) -> acc.concat(elem + "\n"))),
+        */
 
         //CHARS("Number of chars", x -> String.valueOf(x.length())),
+        //CHARS("Number of chars", x -> Integer.toString(x.length())),
         CHARS("Number of chars", x -> String.valueOf(Stream.generate(() -> x).mapToInt(e -> e.length()).sum())),
         //CHARS("Number of chars", x -> String.valueOf(Stream.of(x).mapToInt(e -> e.length()).sum())),
 
         //LINES("Number of lines", x -> String.valueOf(x.split("\n").length)),
         LINES("Number of lines", x -> String.valueOf(x.lines().count())),
+        //LINES("Count lines", s -> Long.toString(s.chars().filter(elem -> elem == '\n').count() + 1)),
 
         /*SORT("Alphabetical order", x -> {
             //final List<String> words = Arrays.asList(x.split("\n"));
@@ -73,7 +78,11 @@ public final class LambdaFilter extends JFrame {
             return String.join("\n", words);
         }),*/
         SORT("Alphabetical order", x -> x.lines().sorted().reduce("", (acc, elem) -> acc.concat(elem + "\n"))),
-
+        /*SORT("Sort words in alphabetical order", s ->
+            Arrays.stream(s.split(ANY_NON_WORD))
+                .sorted()
+                .collect(Collectors.joining("\n"))),
+        */
     /*
         COUNT("Count the words", x -> {
             final List<String> list = new LinkedList<>();
@@ -127,6 +136,15 @@ public final class LambdaFilter extends JFrame {
                     .map(entry -> (entry.getKey() + " -> " + entry.getValue()))
                     .collect(Collectors.joining(" "));
         }),
+    /*
+        COUNT("Count words", s -> {
+            return Arrays.stream(s.split(ANY_NON_WORD))
+                    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                    .entrySet().stream()
+                    .map(entry -> entry.getKey() + " -> " + entry.getValue())
+                    .collect(Collectors.joining(" "));
+        }),
+    */
 
         STATS("Write word length", x -> {
             final Map<String, Integer> words = new HashMap<>();
