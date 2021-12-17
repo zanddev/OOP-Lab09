@@ -126,7 +126,21 @@ public final class LambdaFilter extends JFrame {
                     .stream()
                     .map(entry -> (entry.getKey() + " -> " + entry.getValue()))
                     .collect(Collectors.joining(" "));
+        }),
+
+        STATS("Write word length", x -> {
+            final Map<String, Integer> words = new HashMap<>();
+            x.lines().forEach(word -> {
+                if (!word.trim().equals("")) {
+                    words.put(word, word.length());
+                }
+            });
+            return words.entrySet()
+                    .stream()
+                    .map(entry -> (entry.getKey() + " -> " + entry.getValue()))
+                    .collect(Collectors.joining(" "));
         });
+
 
         private final String commandName;
         private final Function<String, String> fun;
