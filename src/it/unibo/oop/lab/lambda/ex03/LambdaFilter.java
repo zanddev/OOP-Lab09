@@ -7,7 +7,12 @@ import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
 
+//import java.util.Arrays;
+//import java.util.Collections;
+//import java.util.LinkedList;
+//import java.util.List;
 import java.util.function.Function;
+//import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.swing.BorderFactory;
@@ -52,7 +57,18 @@ public final class LambdaFilter extends JFrame {
         //LINES("Number of lines", x -> String.valueOf(x.split("\n").length)),
         LINES("Number of lines", x -> String.valueOf(x.lines().count())),
 
-        ORDER("Alphabetical order", x -> x.lines().sorted().reduce("", (acc, elem) -> (acc.concat(elem + "\n"))));
+        /*SORT("Alphabetical order", x -> {
+            //final List<String> words = Arrays.asList(x.split("\n"));
+
+            //final List<String> words = new LinkedList<>();
+            //x.lines().forEach(elem -> words.add(elem));
+
+            final List<String> words = x.lines().collect(Collectors.toList());
+            Collections.sort(words);
+            //words.forEach(e -> e = e + "\n");
+            return String.join("\n", words);
+        }),*/
+        SORT("Alphabetical order", x -> x.lines().sorted().reduce("", (acc, elem) -> (acc.concat(elem + "\n"))));
 
         private final String commandName;
         private final Function<String, String> fun;
