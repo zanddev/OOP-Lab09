@@ -72,6 +72,24 @@ public final class LambdaFilter extends JFrame {
         }),*/
         SORT("Alphabetical order", x -> x.lines().sorted().reduce("", (acc, elem) -> (acc.concat(elem + "\n")))),
 
+    /*
+        COUNT("Count the words", x -> {
+            final Map<String, Integer> words = new HashMap<>();
+            x.lines().forEach(word -> {
+                if (!word.trim().equals("")) {
+                    if (words.containsKey(word)) {
+                        words.put(word, words.get(word) + 1);
+                    } else {
+                        words.put(word, 1);
+                    }
+                }
+                return;
+            });
+            final List<String> list = new LinkedList<>();
+            words.entrySet().forEach(entry -> list.add(entry.getKey() + " -> " + entry.getValue()));
+            return String.join("\n", list.toArray(new String[0]));
+        });
+    */
         COUNT("Count the words", x -> {
             final Map<String, Integer> words = new HashMap<>();
             x.lines().forEach(word -> {
